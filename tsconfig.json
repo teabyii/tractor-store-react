@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "*": ["./@mf-types/*"]
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+  }
+}
