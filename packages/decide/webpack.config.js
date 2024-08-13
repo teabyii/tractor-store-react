@@ -1,68 +1,89 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { ModuleFederationPlugin } from "@module-federation/enhanced/webpack";
 
-const webpackConfig = {
-  entry: "./src/index",
+export default (
+  env,
+  argv
+) => {
+  const { host } = env;
+  const { mode } = argv;
 
-  output: {
-    uniqueName: 'decide',
-    publicPath: 'auto',
-  },
+  const webpackConfig = {
+    mode,
 
-  devServer: {
-    port: 3002,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
+    entry: "./src/index",
+
+    output: {
+      uniqueName: 'decide',
+      publicPath: 'auto',
     },
-  },
 
-  resolve: {
-    extensions: ['', '.ts', '.tsx', '.css', '...'],
-  },
+    devServer: {
+      port: 3003,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    },
 
-  module: {
-    rules: [
-      {
-        test: /\.(?:tsx?|jsx?)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              ['@babel/preset-env', { targets: "defaults" }],
-              "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
+    resolve: {
+      extensions: ['', '.ts', '.tsx', '.css', '...'],
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.(?:tsx?|jsx?)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', { targets: "defaults" }],
+                "@babel/preset-react",
+                "@babel/preset-typescript",
+              ],
+            },
           },
         },
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
-
-  plugins: [
-    new ModuleFederationPlugin({
-      name: "decide",
-      remotes: {
-        "explore": "explore@http://localhost:3000/mf-manifest.json",
-        "checkout": "checkout@http://localhost:3001/mf-manifest.json"
-      },
-      shared: {
-        react: {
-          singleton: true,
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
         },
-        'react-dom': {
-          singleton: true
-        }
-      }
-    }),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-  ],
-};
+      ],
+    },
 
-export default webpackConfig;
+    plugins: [
+      new ModuleFederationPlugin({
+        name: "decide",
+        exposes: {
+          './App': './src/App.tsx',
+        },
+        remotes: {
+          "explore": mode === "production" ?
+            `explore@${host}/explore/mf-manifest.json` : "explore@http://localhost:3001/mf-manifest.json",
+          "checkout": mode === "production"?
+            `checkout@${host}/checkout/mf-manifest.json` : "checkout@http://localhost:3002/mf-manifest.json",
+          'app': mode === "production"?
+            `app@${host}/mf-manifest.json` : 'app@http://localhost:3000/mf-manifest.json',
+        },
+        shared: {
+          react: {
+            singleton: true,
+          },
+          'react-dom': {
+            singleton: true
+          },
+          'react-router-dom': {
+            singleton: true
+          }
+        }
+      }),
+      new HtmlWebpackPlugin({
+        template: './public/index.html',
+      }),
+    ],
+  };
+
+  return webpackConfig;
+}
+

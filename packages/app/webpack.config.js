@@ -14,15 +14,16 @@ export default (
     entry: "./src/index",
 
     output: {
-      uniqueName: 'checkout',
-      publicPath: 'auto',
+      uniqueName: 'app',
+      publicPath: '/',
     },
 
     devServer: {
-      port: 3002,
+      port: 3000,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
+      historyApiFallback: true
     },
 
     resolve: {
@@ -63,17 +64,17 @@ export default (
 
     plugins: [
       new ModuleFederationPlugin({
-        name: "checkout",
+        name: "app",
         exposes: {
-          './AddToCart': './src/AddToCart.tsx',
-          './MiniCart': './src/MiniCart.tsx',
-          './App': './src/App.tsx',
+          "./Loading": "./src/Loading.tsx",
         },
         remotes: {
-          'explore': mode === "production" ?
+          "explore": mode === "production" ?
             `explore@${host}/explore/mf-manifest.json` : "explore@http://localhost:3001/mf-manifest.json",
-          'app': mode === "production" ?
-            `app@${host}/mf-manifest.json` : 'app@http://localhost:3000/mf-manifest.json',
+          "checkout": mode === "production" ?
+            `checkout@${host}/checkout/mf-manifest.json` : "checkout@http://localhost:3002/mf-manifest.json",
+          "decide": mode === "production"?
+            `decide@${host}/decide/mf-manifest.json` : "decide@http://localhost:3003/mf-manifest.json",
         },
         shared: {
           react: {
@@ -95,3 +96,4 @@ export default (
 
   return webpackConfig;
 };
+

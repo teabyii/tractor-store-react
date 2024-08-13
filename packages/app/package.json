@@ -1,14 +1,15 @@
 {
-  "name": "decide",
+  "name": "app",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "move": "mv dist ../../dist/decide/"
+    "move": "mv dist/* ../../dist/"
   },
   "dependencies": {
+    "canvas-confetti": "1.9.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "6.26.0"

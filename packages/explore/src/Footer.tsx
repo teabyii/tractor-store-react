@@ -27,14 +27,16 @@ const Footer: React.FC = () => {
 
           <div className="e_Footer__credits">
             <h3>techstack</h3>
-            <p>SPA, Piral, React, esbuild</p>
+            <p>SPA, Wepack, Module Fedoration, React</p>
             <p>
-              build by <img src="https://piral.io/logo-simple.f8667084.png" alt="Piral" width="14" height="14" />
-              <a href="https://www.piral.io" target="_blank">
-                Piral
-              </a>{' '}
-              /{' '}
-              <a href="https://github.com/piral-samples/tractor-v2" target="_blank">
+              build by <img src="https://kentl.dev/favicon.ico" alt="kentl.dev" width="15" height="15" />
+              {" "}
+              <a href="https://kentl.dev" target="_blank">
+                Kent.Li
+              </a>{" "}
+              /
+              {" "}
+              <a href="https://github.com/teabyii/tractor-store-react/tree/module-fedoration" target="_blank">
                 GitHub
               </a>
             </p>

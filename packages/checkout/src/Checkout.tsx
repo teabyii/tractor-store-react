@@ -1,7 +1,9 @@
 import * as React from 'react';
-import type { PageComponentProps } from 'app';
+import { useNavigate } from 'react-router-dom';
 import CompactHeader from './components/CompactHeader';
 import Button from './components/Button';
+import Footer from 'explore/Footer';
+import StorePicker from 'explore/StorePicker';
 
 function useShop() {
   const [shop, setShop] = React.useState('');
@@ -26,7 +28,8 @@ const defaultForm = {
   lastName: '',
 };
 
-const Checkout: React.FC<PageComponentProps> = ({ piral, history }) => {
+const Checkout: React.FC = () => {
+  const navigate = useNavigate();
   const shop = useShop();
   const [data, setData] = React.useState(defaultForm);
   const isInvalid = !shop || !data.firstName || !data.lastName;
@@ -41,7 +44,7 @@ const Checkout: React.FC<PageComponentProps> = ({ piral, history }) => {
 
   function submit(ev: React.SyntheticEvent) {
     window.dispatchEvent(new CustomEvent('clear-cart'));
-    history.push('/checkout/thanks');
+    navigate('/checkout/thanks');
     ev.preventDefault();
   }
 
@@ -86,7 +89,7 @@ const Checkout: React.FC<PageComponentProps> = ({ piral, history }) => {
           <h3>Store Pickup</h3>
           <fieldset>
             <div className="c_Checkout__store">
-              <piral.Extension name="store-picker" />
+              <StorePicker />
             </div>
             <label className="c_Checkout__label" htmlFor="c_storeId">
               Store ID
@@ -112,7 +115,7 @@ const Checkout: React.FC<PageComponentProps> = ({ piral, history }) => {
           </div>
         </form>
       </main>
-      <piral.Extension name="footer" />
+      <Footer />
     </div>
   );
 };

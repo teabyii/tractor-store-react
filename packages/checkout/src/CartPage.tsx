@@ -1,9 +1,11 @@
 import * as React from 'react';
-import type { PageComponentProps } from 'app';
 import LineItem from './components/LineItem';
 import Button from './components/Button';
 import data from './data/db.json';
 import { useLineItems } from './data/store';
+import Header from 'explore/Header';
+import Footer from 'explore/Footer';
+import Recommendations from 'explore/Recommendations';
 
 function convertToLineItems(items: Array<{ sku: string; quantity: number }>) {
   return items.reduce((res, { sku, quantity }) => {
@@ -15,7 +17,7 @@ function convertToLineItems(items: Array<{ sku: string; quantity: number }>) {
   }, []);
 }
 
-const CartPage: React.FC<PageComponentProps> = ({ piral }) => {
+const CartPage: React.FC = () => {
   const rawLineItems = useLineItems();
   const lineItems = convertToLineItems(rawLineItems);
   const total = lineItems.reduce((res, { total }) => res + total, 0);
@@ -23,7 +25,7 @@ const CartPage: React.FC<PageComponentProps> = ({ piral }) => {
 
   return (
     <div data-boundary-page="checkout">
-      <piral.Extension name="header" />
+      <Header />
       <main className="c_CartPage">
         <h2>Basket</h2>
         <ul className="c_CartPage__lineItems">
@@ -41,9 +43,9 @@ const CartPage: React.FC<PageComponentProps> = ({ piral }) => {
             Continue Shopping
           </Button>
         </div>
-        <piral.Extension name="recommendations" params={{ skus }} />
+        <Recommendations skus={skus} />
       </main>
-      <piral.Extension name="footer" />
+      <Footer />
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import type { PageComponentProps } from 'app';
 import confetti from 'canvas-confetti';
 import Button from './components/Button';
+import Header from 'explore/Header';
+import Footer from 'explore/Footer';
 
 const settings = {
   particleCount: 3,
@@ -35,12 +36,12 @@ function useConfetti() {
   }, []);
 }
 
-const Thanks: React.FC<PageComponentProps> = ({ piral }) => {
+const Thanks: React.FC = () => {
   useConfetti();
 
   return (
     <div data-boundary-page="checkout">
-      <piral.Extension name="header" />
+      <Header />
       <main className="c_Thanks">
         <h2 className="c_Thanks__title">Thanks for your order!</h2>
         <p className="c_Thanks__text">We'll notify you, when its ready for pickup.</p>
@@ -48,7 +49,7 @@ const Thanks: React.FC<PageComponentProps> = ({ piral }) => {
           Continue Shopping
         </Button>
       </main>
-      <piral.Extension name="footer" />
+      <Footer />
     </div>
   );
 };

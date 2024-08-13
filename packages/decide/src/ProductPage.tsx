@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import VariantOption from './components/VariantOption';
 import data from './data/db.json';
 import { src, srcset } from './js/utils';
@@ -7,6 +7,7 @@ import { src, srcset } from './js/utils';
 import Header from 'explore/Header';
 import Footer from 'explore/Footer';
 import Recommendations from 'explore/Recommendations';
+import AddToCart from 'checkout/AddToCart';
 
 function useSku() {
   const [sku, setSku] = React.useState(() => new URL(location.href).searchParams.get('sku'));
@@ -21,7 +22,8 @@ function useSku() {
   ] as const;
 }
 
-const ProductPage: React.FC<{ id: string }> = ({ id }) => {
+const ProductPage: React.FC = () => {
+  const { id } = useParams();
   const [sku, setSku] = useSku();
   const { name, variants, highlights = [] } = data.products.find((p) => p.id === id);
   const variant = variants.find((v) => v.sku === sku) || variants[0];
@@ -61,7 +63,7 @@ const ProductPage: React.FC<{ id: string }> = ({ id }) => {
                 <VariantOption key={i} {...{ ...v, selected: v.sku === variant.sku }} />
               ))}
             </ul>
-            <piral.Extension name="add-to-cart" params={{ sku: variant.sku }} />
+            <AddToCart sku={variant.sku} />
           </div>
         </div>
         <Recommendations skus={[variant.sku]} />
