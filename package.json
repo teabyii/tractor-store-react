@@ -12,7 +12,7 @@
     "dev": "lerna run dev",
     "mkdist": "rm -rf ./dist && mkdir ./dist",
     "build:local": "npm run mkdist && lerna run build -- --env host=\"http://localhost:8081\" && lerna run move",
-    "build": "npm run mkdist && lerna run build -- --env host=\"https://tractor-store-react.page.dev\" && lerna run move",
+    "build": "npm run mkdist && lerna run build -- --env host=\"https://tractor-store-react.pages.dev\" && lerna run move",
     "serve": "npm run build:local && http-server -p 8081 -c-1 dist"
   },
   "author": "teabyii",
