@@ -14,11 +14,11 @@ List of techniques used in this implementation.
 | -------------------------- | ----------------------------------------- |
 | 🛠️ Frameworks, Libraries   | [React], [React-Router], [Webpack]        |
 | 📝 Rendering               | SPA                                       |
-| 🐚 Application Shell       | None                                      |
-| 🧩 Client-Side Integration | Module Federation                         |
+| 🐚 Application Shell       | [Webpack]                                 |
+| 🧩 Client-Side Integration | [Module Federation]                       |
 | 🧩 Server-Side Integration | None                                      |
 | 📣 Communication           | Custom Events, HTML Attributes            |
-| 🗺️ Navigation              | SPA, One MF per Team                      |
+| 🗺️ Navigation              | SPA, One MF per Team, history API routing |
 | 🎨 Styling                 | Self-Contained CSS (No Global Styles)     |
 | 🍱 Design System           | None                                      |
 | 🔮 Discovery               | None                                      |
@@ -28,6 +28,7 @@ List of techniques used in this implementation.
 [React]: https://react.dev/
 [React-Router]: https://reactrouter.com/en/main
 [Webpack]: https://webpack.js.org/
+[Module Federation]: https://module-federation.io/
 
 ### Limitations
 
