@@ -1,21 +1,19 @@
 import * as React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import data from './data/db.json';
 import Button from './components/Button';
 
 const AddToCart: React.FC<{ sku: string }> = ({ sku }) => {
   const variant = data.variants.find((p) => p.sku === sku);
-  const navigate = useNavigate();
   const outOfStock = variant.inventory === 0;
 
   function submit(ev: React.SyntheticEvent) {
+    ev.preventDefault();
     window.dispatchEvent(
       new CustomEvent('add-to-cart', {
         detail: { sku },
       }),
     );
-    navigate('/checkout/cart');
-    ev.preventDefault();
   }
 
   return (
